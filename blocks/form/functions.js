@@ -59,60 +59,65 @@ function maskMobileNumber(mobileNumber) {
 let otpTimerInterval;
 
 /**
- * Common timer function
+ * Start OTP timer - counts down from 30 seconds
+ * Disables resend button during countdown
  */
-function runOtpTimer() {
-  const resendBtn = document.querySelector('.field-resendotpbtn button');
-  const timerText = document.querySelector(
-    '.field-resend-and-attempts-text strong',
-  );
+function startOtpTimer() {
+  const timerInput = document.querySelector('input[name="timer"]');
+  const resendBtn = document.querySelector('.field-resend-otp button');
 
   let timeLeft = 30;
 
-  clearInterval(otpTimerInterval);
+  // Clear any existing timer
+  if (otpTimerInterval) {
+    clearInterval(otpTimerInterval);
+  }
 
+  // Disable resend button
   if (resendBtn) {
     resendBtn.disabled = true;
-    resendBtn.style.setProperty('background', '#999', 'important');
-    resendBtn.style.setProperty('cursor', 'not-allowed', 'important');
   }
 
-  if (timerText) {
-    timerText.innerText = `${timeLeft} secs`;
+  // Set initial timer value
+  if (timerInput) {
+    timerInput.value = `${timeLeft}s`;
   }
 
+  // Start countdown
   otpTimerInterval = setInterval(() => {
     timeLeft -= 1;
 
-    if (timerText) {
-      timerText.innerText = `${timeLeft} secs`;
+    if (timerInput) {
+      timerInput.value = `${timeLeft}s`;
     }
 
+    // When timer reaches 0
     if (timeLeft <= 0) {
       clearInterval(otpTimerInterval);
-
-      const attemptsLeft = Number(
-        sessionStorage.getItem('otpAttemptsLeft') || '3',
-      );
-
-      if (attemptsLeft <= 0) {
-        return;
-      }
-
+      
+      // Enable resend button
       if (resendBtn) {
         resendBtn.disabled = false;
-        resendBtn.style.setProperty('background', 'blue', 'important');
-        resendBtn.style.setProperty('cursor', 'pointer', 'important');
       }
 
-      if (timerText) {
-        timerText.innerText = '0 secs';
+      if (timerInput) {
+        timerInput.value = '0s';
       }
     }
   }, 1000);
 }
 
+/**
+ * Stop OTP timer
+ */
+function stopOtpTimer() {
+  if (otpTimerInterval) {
+    clearInterval(otpTimerInterval);
+    otpTimerInterval = null;
+  }
+}
+
 // eslint-disable-next-line import/prefer-default-export
 export {
-  getFullName, days, submitFormArrayToString, maskMobileNumber, runOtpTimer,
+  getFullName, days, submitFormArrayToString, maskMobileNumber, startOtpTimer, stopOtpTimer,
 };
