@@ -117,7 +117,90 @@ function stopOtpTimer() {
   }
 }
 
+/**
+ * Format number to Indian currency format
+ * @param {number} amount
+ * @returns {string} formatted currency string
+ */
+function formatIndianCurrency(amount) {
+  return `₹${amount.toLocaleString('en-IN', { maximumFractionDigits: 0 })}`;
+}
+
+/**
+ * Calculate EMI (Equated Monthly Installment)
+ * @param {number} principal - Loan amount (P)
+ * @param {number} annualRate - Annual interest rate in percentage (e.g., 10.97)
+ * @param {number} tenureMonths - Loan tenure in months (n)
+ * @returns {number} Monthly EMI amount
+ */
+function calculateEMI(principal, annualRate, tenureMonths) {
+  // Convert annual rate to monthly rate (r = annual rate / (12 × 100))
+  const monthlyRate = annualRate / (12 * 100);
+  
+  // EMI = [P × r × (1 + r)^n] / [(1 + r)^n - 1]
+  const onePlusR = 1 + monthlyRate;
+  const onePlusRPowerN = Math.pow(onePlusR, tenureMonths);
+  
+  const emi = (principal * monthlyRate * onePlusRPowerN) / (onePlusRPowerN - 1);
+  
+  return Math.round(emi);
+}
+
+/**
+ * Initialize EMI calculator with event listeners
+ * Updates EMI amount and loan amount display when user changes the sliders
+ */
+function initEMICalculator() {
+  const loanAmountInput = document.querySelector('input[name="loanAmount"]');
+  const loanTenureInput = document.querySelector('input[name="loanTenure"]');
+  const xpressField = document.querySelector('input[name="xpress"]');
+  const emiAmountField = document.querySelector('input[name="emi_amount"]');
+  const loanAmountBubble = document.querySelector('#numberinput-45bf0620a4')?.closest('.range-widget-wrapper')?.querySelector('.range-bubble');
+  const tenureBubble = document.querySelector('#numberinput-2a9c496a67')?.closest('.range-widget-wrapper')?.querySelector('.range-bubble');
+
+  if (!loanAmountInput || !loanTenureInput || !xpressField || !emiAmountField) {
+    return;
+  }
+
+  const annualRate = 10.97; // Fixed rate of interest
+
+  function updateEMICalculation() {
+    const loanAmount = parseFloat(loanAmountInput.value) || 775000;
+    const tenure = parseFloat(loanTenureInput.value) || 48;
+
+    // Update the loan amount display (xpress field)
+    xpressField.value = formatIndianCurrency(loanAmount);
+
+    // Calculate and update EMI
+    const emi = calculateEMI(loanAmount, annualRate, tenure);
+    emiAmountField.value = formatIndianCurrency(emi);
+
+    // Update range bubbles
+    if (loanAmountBubble) {
+      loanAmountBubble.textContent = formatIndianCurrency(loanAmount);
+    }
+    if (tenureBubble) {
+      tenureBubble.textContent = `${Math.round(tenure)} months`;
+    }
+  }
+
+  // Add event listeners
+  loanAmountInput.addEventListener('input', updateEMICalculation);
+  loanTenureInput.addEventListener('input', updateEMICalculation);
+
+  // Initial calculation
+  updateEMICalculation();
+}
+
 // eslint-disable-next-line import/prefer-default-export
 export {
-  getFullName, days, submitFormArrayToString, maskMobileNumber, startOtpTimer, stopOtpTimer,
+  getFullName,
+  days,
+  submitFormArrayToString,
+  maskMobileNumber,
+  startOtpTimer,
+  stopOtpTimer,
+  calculateEMI,
+  formatIndianCurrency,
+  initEMICalculator,
 };
