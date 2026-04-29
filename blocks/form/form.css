@@ -1008,40 +1008,65 @@ main .form form .field-otp-instructions strong {
     color: #333;
 }
 
-/* OTP Code Input */
-main .form form .field-otp-code {
+/* OTP Password Input */
+main .form form .text-wrapper[class*="field-password"] {
     grid-column: span 12 !important;
     margin-bottom: 16px;
+    position: relative;
 }
 
-main .form form .field-otp-code label {
+main .form form .text-wrapper[class*="field-password"] label {
     font-size: 14px;
     color: #666;
     font-weight: 500;
     margin-bottom: 8px;
 }
 
-main .form form .field-otp-code input {
+main .form form .text-wrapper[class*="field-password"] input[type="password"],
+main .form form .text-wrapper[class*="field-password"] input[type="text"] {
     width: 100%;
     height: 48px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    padding: 12px;
+    padding: 12px 45px 12px 12px;
     font-size: 16px;
-    letter-spacing: 8px;
+    letter-spacing: 4px;
     text-align: center;
     background-color: #fff;
 }
 
-main .form form .field-otp-code input:focus {
+main .form form .text-wrapper[class*="field-password"] input:focus {
     border-color: #5F8DDA;
     outline: none;
     box-shadow: 0 0 0 3px rgba(95, 141, 218, 0.1);
 }
 
+/* Eye Icon Toggle for Password */
+main .form form .text-wrapper[class*="field-password"] #togglePassword {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #666;
+    font-size: 18px;
+    padding: 8px;
+    transition: color 0.2s ease;
+    margin-top: 12px;
+}
+
+main .form form .text-wrapper[class*="field-password"] #togglePassword:hover {
+    color: #333;
+}
+
+main .form form .text-wrapper[class*="field-password"] #togglePassword.bi-eye,
+main .form form .text-wrapper[class*="field-password"] #togglePassword.bi-eye-slash {
+    display: block;
+}
+
 /* Timer and Attempt Message Row */
 main .form form .field-timer {
-    grid-column: span 5 !important;
+    grid-column: span 7 !important;
     display: flex;
     align-items: center;
     margin-bottom: 0;
@@ -1073,7 +1098,7 @@ main .form form .field-timer input:hover {
 }
 
 main .form form .field-attempt-msg {
-    grid-column: span 7 !important;
+    grid-column: span 5 !important;
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -1103,19 +1128,21 @@ main .form form .field-attempt-msg input:hover {
 
 /* Submit Button */
 main .form form .field-otp-submit {
-    grid-column: span 12 !important;
-    margin-top: 16px;
-    margin-bottom: 8px;
+    grid-column: span 3 !important;
+    margin-top: 0;
+    margin-bottom: 0;
+    display: flex;
+    align-items: flex-end;
 }
 
 main .form form .field-otp-submit button {
     width: 100%;
-    height: 48px;
+    height: 42px;
     background-color: #5F8DDA;
     color: #fff;
     border: none;
     border-radius: 4px;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
     cursor: pointer;
     transition: background-color 0.2s ease;
@@ -1132,8 +1159,8 @@ main .form form .field-otp-submit button:disabled {
 
 /* Invalid OTP Message */
 main .form form .field-invalid-otp-msg {
-    grid-column: span 8 !important;
-    margin-top: 0;
+    grid-column: span 7 !important;
+    margin-top: 16px;
     margin-bottom: 0;
 }
 
@@ -1192,15 +1219,34 @@ main .form form .field-resend-otp button:disabled {
 /* Responsive adjustments for OTP section */
 @media (width <= 768px) {
     main .form form .field-timer {
-        grid-column: span 7 !important;
+        grid-column: span 12 !important;
+        margin-bottom: 8px;
     }
     
     main .form form .field-attempt-msg {
-        grid-column: span 5 !important;
+        grid-column: span 12 !important;
+        justify-content: flex-start;
+        margin-bottom: 8px;
+    }
+    
+    main .form form .field-attempt-msg input {
+        text-align: left;
+    }
+    
+    main .form form .field-otp-submit {
+        grid-column: span 12 !important;
+        margin-top: 16px;
+        margin-bottom: 8px;
+    }
+    
+    main .form form .field-otp-submit button {
+        height: 48px;
+        font-size: 16px;
     }
     
     main .form form .field-invalid-otp-msg {
         grid-column: span 12 !important;
+        margin-top: 8px;
         margin-bottom: 8px;
     }
     
@@ -1215,18 +1261,24 @@ main .form form .field-resend-otp button:disabled {
         padding: 16px;
     }
     
-    main .form form .field-timer,
-    main .form form .field-attempt-msg {
+    main .form form .field-timer {
         grid-column: span 12 !important;
         justify-content: flex-start;
         margin-bottom: 8px;
     }
     
     main .form form .field-attempt-msg {
+        grid-column: span 12 !important;
         justify-content: flex-start;
+        margin-bottom: 8px;
     }
     
     main .form form .field-attempt-msg input {
         text-align: left;
+    }
+    
+    main .form form .field-otp-submit {
+        grid-column: span 12 !important;
+        margin-top: 16px;
     }
 }
