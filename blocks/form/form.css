@@ -1459,3 +1459,248 @@ main .form form .field-resend-otp button:disabled {
         margin-top: 16px;
     }
 }
+
+/* Loan Application Status Panel Styling */
+main .form form .field-loan-application-status-panel {
+    background-color: #F8F9FA;
+    padding: 0;
+    border-radius: 0;
+    position: relative;
+}
+
+/* KYC Verification Notice Banner */
+main .form form .field-kyc-verification-notice {
+    background-color: #FFF9E6;
+    border: 1px solid #FFE082;
+    border-left: 4px solid #FFB300;
+    padding: 16px 20px;
+    margin-bottom: 24px;
+    border-radius: 8px;
+}
+
+main .form form .field-kyc-verification-notice p {
+    color: #5D4E37;
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Loan Application Number Section */
+main .form form .field-loan-application-number {
+    background-color: #fff;
+    border: 1px solid #E0E0E0;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+    position: relative;
+    padding-left: 80px;
+}
+
+main .form form .field-loan-application-number::before {
+    content: "📋";
+    position: absolute;
+    left: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 36px;
+    width: 48px;
+    height: 48px;
+    background-color: #E8EAF6;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+main .form form .field-loan-application-number label {
+    font-size: 14px;
+    color: #999;
+    font-weight: 400;
+    margin-bottom: 8px;
+    display: block;
+}
+
+main .form form .field-loan-application-number input {
+    font-size: 28px;
+    font-weight: 700;
+    color: #000;
+    border: none;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    height: auto;
+    width: calc(100% - 40px);
+    pointer-events: none;
+}
+
+main .form form .field-loan-application-number input:hover {
+    border: none;
+}
+
+main .form form .field-loan-application-number::after {
+    content: "📋";
+    position: absolute;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: #5F8DDA;
+    cursor: pointer;
+}
+
+main .form form .field-loan-application-number .field-description {
+    margin-top: 8px;
+    margin-bottom: 0;
+}
+
+main .form form .field-loan-application-number .field-description p {
+    color: #666;
+    font-size: 13px;
+    margin: 0;
+}
+
+/* Xpress Personal Loan Summary Header */
+main .form form .field-plain-text1777376467065 {
+    margin-bottom: 20px;
+}
+
+main .form form .field-plain-text1777376467065 p {
+    font-size: 22px;
+    font-weight: 700;
+    color: #000;
+    margin: 0;
+}
+
+main .form form .field-plain-text1777376467065 strong {
+    font-weight: 700;
+}
+
+/* Loan Amount Section */
+main .form form .field-text-input1777376474952 {
+    background-color: #fff;
+    border-left: 4px solid #5F8DDA;
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    border-radius: 4px;
+}
+
+main .form form .field-text-input1777376474952 label {
+    font-size: 14px;
+    color: #999;
+    font-weight: 400;
+    margin-bottom: 8px;
+    display: block;
+}
+
+main .form form .field-text-input1777376474952 input {
+    font-size: 32px;
+    font-weight: 700;
+    color: #000;
+    border: none;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    height: auto;
+    pointer-events: none;
+}
+
+main .form form .field-text-input1777376474952 input:hover {
+    border: none;
+}
+
+/* Disbursal Note */
+main .form form .field-disbursal-note {
+    background-color: #E3F2FD;
+    border: 1px solid #90CAF9;
+    border-left: 4px solid #2196F3;
+    padding: 16px 20px;
+    padding-left: 50px;
+    border-radius: 8px;
+    margin-top: 24px;
+    position: relative;
+}
+
+main .form form .field-disbursal-note::before {
+    content: "ℹ️";
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+}
+
+main .form form .field-disbursal-note p {
+    color: #0D47A1;
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Responsive adjustments for loan application status */
+@media (width <= 768px) {
+    main .form form .field-loan-application-number {
+        padding-left: 24px;
+        padding-top: 80px;
+    }
+    
+    main .form form .field-loan-application-number::before {
+        left: 50%;
+        top: 24px;
+        transform: translateX(-50%);
+    }
+    
+    main .form form .field-loan-application-number::after {
+        right: 24px;
+        top: auto;
+        bottom: 24px;
+        transform: none;
+    }
+    
+    main .form form .field-loan-application-number input {
+        font-size: 24px;
+        width: 100%;
+    }
+    
+    main .form form .field-text-input1777376474952 input {
+        font-size: 28px;
+    }
+}
+
+@media (width <= 480px) {
+    main .form form .field-loan-application-status-panel {
+        padding: 0;
+    }
+    
+    main .form form .field-kyc-verification-notice {
+        padding: 12px 16px;
+        margin-bottom: 16px;
+    }
+    
+    main .form form .field-loan-application-number {
+        padding: 16px;
+        padding-top: 70px;
+        margin-bottom: 16px;
+    }
+    
+    main .form form .field-loan-application-number::before {
+        font-size: 28px;
+        width: 40px;
+        height: 40px;
+    }
+    
+    main .form form .field-loan-application-number input {
+        font-size: 20px;
+    }
+    
+    main .form form .field-text-input1777376474952 {
+        padding: 16px;
+    }
+    
+    main .form form .field-text-input1777376474952 input {
+        font-size: 24px;
+    }
+    
+    main .form form .field-disbursal-note {
+        padding: 12px 16px 12px 40px;
+    }
+}
