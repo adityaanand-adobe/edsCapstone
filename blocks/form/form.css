@@ -974,6 +974,150 @@ main .form form .accordion .panel-wrapper input[name="schedule_of_charges"] {
     }
 }
 
+/* Loan Display Panel Styling */
+main .form form .field-display {
+    background-color: #FFFBF0;
+    border: 1px solid #F5E6D3;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* First field - Loan Amount Title and Value */
+main .form form .field-display .text-wrapper:first-of-type {
+    margin-bottom: 8px;
+}
+
+main .form form .field-display .text-wrapper:first-of-type label {
+    font-size: 16px;
+    color: #333;
+    font-weight: 400;
+    margin-bottom: 8px;
+}
+
+main .form form .field-display .text-wrapper:first-of-type input {
+    font-size: 32px;
+    font-weight: 700;
+    color: #000;
+    border: none;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    height: auto;
+    pointer-events: none;
+}
+
+main .form form .field-display .text-wrapper:first-of-type input:hover {
+    border: none;
+}
+
+/* Divider after loan amount */
+main .form form .field-display .text-wrapper:first-of-type::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, #E8D5B8, transparent);
+    margin-top: 16px;
+}
+
+/* EMI Amount, Rate of Interest, Taxes - Grid Layout */
+main .form form .field-display .text-wrapper:not(:first-of-type):not(:last-of-type) {
+    position: relative;
+    padding-left: 16px;
+    margin-bottom: 20px;
+}
+
+main .form form .field-display .text-wrapper:not(:first-of-type):not(:last-of-type)::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background-color: #F5A623;
+    border-radius: 2px;
+}
+
+main .form form .field-display .text-wrapper:not(:first-of-type):not(:last-of-type) label {
+    font-size: 13px;
+    color: #999;
+    font-weight: 400;
+    margin-bottom: 4px;
+    display: block;
+}
+
+main .form form .field-display .text-wrapper:not(:first-of-type):not(:last-of-type) input {
+    font-size: 20px;
+    font-weight: 700;
+    color: #333;
+    border: none;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    height: auto;
+    pointer-events: none;
+}
+
+main .form form .field-display .text-wrapper:not(:first-of-type):not(:last-of-type) input:hover {
+    border: none;
+}
+
+/* Two column layout for EMI and Rate of Interest */
+main .form form .field-display .text-wrapper:nth-of-type(2),
+main .form form .field-display .text-wrapper:nth-of-type(3) {
+    display: inline-block;
+    width: calc(50% - 10px);
+    vertical-align: top;
+}
+
+main .form form .field-display .text-wrapper:nth-of-type(2) {
+    margin-right: 20px;
+}
+
+/* Disclaimer text at bottom */
+main .form form .field-display .plain-text-wrapper {
+    background-color: #F5A623;
+    color: #fff;
+    padding: 16px 20px;
+    border-radius: 8px;
+    margin: 20px 0 0 0;
+    position: relative;
+    padding-left: 50px;
+}
+
+main .form form .field-display .plain-text-wrapper::before {
+    content: "ⓘ";
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 24px;
+    color: #fff;
+    font-weight: bold;
+}
+
+main .form form .field-display .plain-text-wrapper p {
+    color: #fff;
+    font-size: 13px;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Responsive adjustments */
+@media (width <= 768px) {
+    main .form form .field-display .text-wrapper:nth-of-type(2),
+    main .form form .field-display .text-wrapper:nth-of-type(3) {
+        display: block;
+        width: 100%;
+        margin-right: 0;
+    }
+    
+    main .form form .field-display .text-wrapper:first-of-type input {
+        font-size: 28px;
+    }
+}
+
 /* Income Source Note Styling */
 main .form form .field-income-source-note {
     background-color: #FFF8E7;
