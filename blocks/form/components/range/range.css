@@ -62,7 +62,7 @@ main .form .range-widget-wrapper.decorated input[type="range"]:focus {
 .range-widget-wrapper.decorated .range-bubble {
     position: absolute;
     top: 0;
-    transform: translateX(-50%);
+    right: 0;
     background: #fff;
     border: 1px solid #E0E0E0;
     border-radius: 8px;

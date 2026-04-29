@@ -120,7 +120,7 @@ function createScaleMarkers(container, min, max, formatType = 'currency', steps 
 }
 
 /**
- * Update the bubble position and value display
+ * Update the bubble value display and progress bar
  * @param {HTMLInputElement} input - The range input element
  * @param {HTMLElement} element - The wrapper element
  * @param {string} formatType - Either 'currency' or 'months'
@@ -131,10 +131,9 @@ function updateBubble(input, element, formatType = 'currency') {
   const min = parseFloat(input.min) || 0;
   const value = parseFloat(input.value) || min;
   
-  // Calculate current position
+  // Calculate current position for progress bar
   const current = Math.round((value - min) / step);
   const total = Math.round((max - min) / step);
-  const percentage = total > 0 ? (current / total) * 100 : 0;
   
   const bubble = element.querySelector('.range-bubble');
   if (!bubble) return;
@@ -145,11 +144,6 @@ function updateBubble(input, element, formatType = 'currency') {
   } else {
     bubble.textContent = formatINR(Math.round(value));
   }
-  
-  // Calculate bubble position
-  const bubbleWidth = bubble.offsetWidth || 100;
-  const offset = (percentage / 100) * bubbleWidth;
-  bubble.style.left = `calc(${percentage}% - ${offset}px)`;
   
   // Update CSS custom properties for progress bar
   element.style.setProperty('--total-steps', total);
@@ -205,17 +199,8 @@ export default async function decorate(fieldDiv, fieldJson) {
     updateBubble(e.target, wrapper, formatType);
   });
   
-  // Initialize bubble position and value
+  // Initialize bubble value
   updateBubble(input, wrapper, formatType);
-  
-  // Update bubble on window resize to recalculate positioning
-  let resizeTimeout;
-  window.addEventListener('resize', () => {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(() => {
-      updateBubble(input, wrapper, formatType);
-    }, 100);
-  });
   
   return fieldDiv;
 }
