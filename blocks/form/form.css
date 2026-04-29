@@ -792,3 +792,170 @@ main div.form-wrapper {
 main .form form select[multiple] {
     height: calc(42px + 50px);
 }
+
+/* Review Section Styling */
+main .form form .field-review-fragment .field-form-accordion1777373741931 {
+    margin-top: 20px;
+}
+
+main .form form .field-review-fragment .field-form-accordion1777373741931 > legend {
+    font-size: 24px;
+    font-weight: 600;
+    color: #000;
+    margin-bottom: 8px;
+}
+
+main .form form .field-review-fragment .field-description {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+/* Accordion Panel Styling */
+main .form form .accordion .panel-wrapper {
+    margin-bottom: 16px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+main .form form .accordion .panel-wrapper > legend.accordion-legend {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #E3EFFF;
+    padding: 16px 20px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 600;
+    color: #000;
+    margin: 0;
+    transition: background-color 0.2s ease;
+    position: relative;
+}
+
+main .form form .accordion .panel-wrapper > legend.accordion-legend:hover {
+    background-color: #D5E6FF;
+}
+
+/* Accordion icon on the left */
+main .form form .accordion .panel-wrapper > legend.accordion-legend::before {
+    content: "";
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    margin-right: 12px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* Default lock icon for first panel (Loan Details) */
+main .form form .accordion .panel-wrapper[data-index="0"] > legend.accordion-legend::before {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%234A90E2"><path d="M12 2C9.243 2 7 4.243 7 7v3H6c-1.103 0-2 .897-2 2v8c0 1.103.897 2 2 2h12c1.103 0 2-.897 2-2v-8c0-1.103-.897-2-2-2h-1V7c0-2.757-2.243-5-5-5zM9 7c0-1.654 1.346-3 3-3s3 1.346 3 3v3H9V7zm9 13H6v-8h12v8z"/><circle cx="12" cy="16" r="1.5"/></svg>');
+}
+
+/* Shield icon for second panel (Personal Details) */
+main .form form .accordion .panel-wrapper[data-index="1"] > legend.accordion-legend::before {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%234A90E2"><path d="M12 2L4 6v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V6l-8-4zm0 18.5c-4.3-1.14-7-5.46-7-10.5V7.3l7-3.11 7 3.11V10c0 5.04-2.7 9.36-7 10.5z"/></svg>');
+}
+
+/* Chevron icon on the right */
+main .form form .accordion .panel-wrapper > legend.accordion-legend::after {
+    content: "";
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23333"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: transform 0.2s ease;
+    margin-left: auto;
+}
+
+/* Rotate chevron when expanded */
+main .form form .accordion .panel-wrapper:not(.accordion-collapse) > legend.accordion-legend::after {
+    transform: rotate(180deg);
+}
+
+/* Accordion Content */
+main .form form .accordion .panel-wrapper > .field-wrapper,
+main .form form .accordion .panel-wrapper > .text-wrapper,
+main .form form .accordion .panel-wrapper > .date-wrapper {
+    display: none;
+}
+
+/* Show content when expanded (not collapsed) */
+main .form form .accordion .panel-wrapper:not(.accordion-collapse) > .field-wrapper,
+main .form form .accordion .panel-wrapper:not(.accordion-collapse) > .text-wrapper,
+main .form form .accordion .panel-wrapper:not(.accordion-collapse) > .date-wrapper {
+    display: block;
+}
+
+/* Accordion content area styling */
+main .form form .accordion .panel-wrapper:not(.accordion-collapse) {
+    background-color: #F8FBFF;
+    padding-bottom: 20px;
+}
+
+/* Review section field styling */
+main .form form .accordion .panel-wrapper .text-wrapper,
+main .form form .accordion .panel-wrapper .date-wrapper {
+    margin: 0;
+    padding: 12px 20px;
+}
+
+main .form form .accordion .panel-wrapper .text-wrapper label,
+main .form form .accordion .panel-wrapper .date-wrapper label {
+    font-size: 12px;
+    color: #666;
+    font-weight: 400;
+    display: block;
+    margin-bottom: 4px;
+}
+
+main .form form .accordion .panel-wrapper .text-wrapper input,
+main .form form .accordion .panel-wrapper .date-wrapper input {
+    border: none;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    height: auto;
+    font-size: 14px;
+    font-weight: 500;
+    color: #000;
+    pointer-events: none;
+}
+
+main .form form .accordion .panel-wrapper .text-wrapper input:hover,
+main .form form .accordion .panel-wrapper .date-wrapper input:hover {
+    border: none;
+}
+
+/* Link styling for schedule of charges */
+main .form form .accordion .panel-wrapper input[name="schedule_of_charges"] {
+    color: #4A90E2;
+    text-decoration: underline;
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+/* Responsive adjustments for review section */
+@media (width <= 768px) {
+    main .form form .accordion .panel-wrapper .text-wrapper.col-3,
+    main .form form .accordion .panel-wrapper .date-wrapper.col-3 {
+        grid-column: span 6;
+    }
+}
+
+@media (width <= 480px) {
+    main .form form .accordion .panel-wrapper .text-wrapper.col-3,
+    main .form form .accordion .panel-wrapper .date-wrapper.col-3 {
+        grid-column: span 12;
+    }
+    
+    main .form form .accordion .panel-wrapper > legend.accordion-legend {
+        font-size: 16px;
+        padding: 14px 16px;
+    }
+}
