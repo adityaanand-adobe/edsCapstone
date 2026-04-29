@@ -902,16 +902,31 @@ main .form form .accordion .panel-wrapper:not(.accordion-collapse) {
 main .form form .accordion .panel-wrapper .text-wrapper,
 main .form form .accordion .panel-wrapper .date-wrapper {
     margin: 0;
-    padding: 12px 20px;
+    padding: 16px 20px;
+    position: relative;
+    padding-left: 28px;
+}
+
+/* Blue vertical line on the left of each field */
+main .form form .accordion .panel-wrapper .text-wrapper::before,
+main .form form .accordion .panel-wrapper .date-wrapper::before {
+    content: "";
+    position: absolute;
+    left: 20px;
+    top: 16px;
+    bottom: 16px;
+    width: 3px;
+    background-color: #4A90E2;
+    border-radius: 2px;
 }
 
 main .form form .accordion .panel-wrapper .text-wrapper label,
 main .form form .accordion .panel-wrapper .date-wrapper label {
-    font-size: 12px;
-    color: #666;
+    font-size: 13px;
+    color: #999;
     font-weight: 400;
     display: block;
-    margin-bottom: 4px;
+    margin-bottom: 6px;
 }
 
 main .form form .accordion .panel-wrapper .text-wrapper input,
@@ -921,9 +936,9 @@ main .form form .accordion .panel-wrapper .date-wrapper input {
     padding: 0;
     margin: 0;
     height: auto;
-    font-size: 14px;
-    font-weight: 500;
-    color: #000;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
     pointer-events: none;
 }
 
