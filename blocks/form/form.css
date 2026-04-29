@@ -1032,7 +1032,7 @@ main .form form .field-otp-instructions {
 
 main .form form .field-otp-instructions p {
     color: #666;
-    font-size: 14px;
+    font-size: 18px;
     margin: 0;
     line-height: 1.5;
 }
@@ -1050,7 +1050,7 @@ main .form form .text-wrapper[class*="field-password"] {
 }
 
 main .form form .text-wrapper[class*="field-password"] label {
-    font-size: 14px;
+    font-size: 17px;
     color: #666;
     font-weight: 500;
     margin-bottom: 8px;
@@ -1106,7 +1106,7 @@ main .form form .field-timer {
 }
 
 main .form form .field-timer label {
-    font-size: 14px;
+    font-size: 16px;
     color: #666;
     margin-right: 4px;
     margin-bottom: 0;
