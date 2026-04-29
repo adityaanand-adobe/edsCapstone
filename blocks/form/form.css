@@ -821,7 +821,6 @@ main .form form .accordion .panel-wrapper {
 main .form form .accordion .panel-wrapper > legend.accordion-legend {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     background-color: #E3EFFF;
     padding: 16px 20px;
     cursor: pointer;
