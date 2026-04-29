@@ -974,6 +974,40 @@ main .form form .accordion .panel-wrapper input[name="schedule_of_charges"] {
     }
 }
 
+/* Income Source Note Styling */
+main .form form .field-income-source-note {
+    background-color: #FFF8E7;
+    border: 1px solid #F5C98F;
+    border-left: 4px solid #E69A3D;
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+}
+
+main .form form .field-income-source-note::before {
+    content: "ⓘ";
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    color: #E69A3D;
+    font-size: 18px;
+    font-weight: bold;
+    margin-right: 12px;
+    flex-shrink: 0;
+    line-height: 1;
+}
+
+main .form form .field-income-source-note p {
+    color: #8B6914;
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0;
+    flex: 1;
+}
+
 /* OTP Verification Section Styling */
 main .form form .field-otp-verification {
     background-color: #fff;
