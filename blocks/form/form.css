@@ -2203,3 +2203,457 @@ main .form form .field-offermsg .field-plain-text-20417643851777371920128 p {
         font-size: 16px;
     }
 }
+
+/* Salary Bank & Income Verification Section Styling */
+
+/* Main container - Salary Bank & Income Verification */
+main .form form .field-salary-bank-and-income-verification {
+    background-color: #F5F8FB;
+    padding: 32px 24px;
+    border-radius: 12px;
+    margin-bottom: 24px;
+}
+
+main .form form .field-salary-bank-and-income-verification > legend {
+    display: none;
+}
+
+/* Salary Bank Selection Panel */
+main .form form .field-salary-bank-selection {
+    background-color: #E8F0FF;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 24px;
+}
+
+main .form form .field-salary-bank-selection > legend {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    padding: 0;
+    border: none;
+}
+
+main .form form .field-salary-bank-selection > legend::before {
+    content: "🏦";
+    display: inline-block;
+    font-size: 24px;
+    margin-right: 12px;
+}
+
+/* Bank Selection Radio Group with Logo Cards */
+main .form form .field-salary-bank {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding: 0;
+}
+
+main .form form .field-salary-bank > .radio-wrapper {
+    flex: 0 0 auto;
+    margin: 0;
+    position: relative;
+}
+
+main .form form .field-salary-bank > .radio-wrapper > input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+main .form form .field-salary-bank > .radio-wrapper > label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 100px;
+    background-color: #fff;
+    border: 2px solid #E0E0E0;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 12px;
+    position: relative;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+main .form form .field-salary-bank > .radio-wrapper > label:hover {
+    border-color: #B0C4DE;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+}
+
+/* Selected state - no blue dot yet */
+main .form form .field-salary-bank > .radio-wrapper > input[type="radio"]:checked ~ label {
+    border-color: #5F8DDA;
+    background-color: #F5F9FF;
+    box-shadow: 0 2px 8px rgba(95, 141, 218, 0.15);
+}
+
+/* Blue dot indicator below selected bank */
+main .form form .field-salary-bank > .radio-wrapper > input[type="radio"]:checked ~ label::after {
+    content: "";
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 8px;
+    height: 8px;
+    background-color: #5F8DDA;
+    border-radius: 50%;
+}
+
+/* Bank label text */
+main .form form .field-salary-bank > .radio-wrapper > label {
+    font-size: 12px;
+    color: #666;
+    text-align: center;
+    line-height: 1.3;
+    font-weight: 500;
+}
+
+/* Style for bank logos (if images are added later) */
+main .form form .field-salary-bank > .radio-wrapper > label::before {
+    content: "";
+    display: block;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 8px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* Individual bank logo placeholders */
+main .form form .field-salary-bank > .radio-wrapper[data-id="salary-bank"] > label::before {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23ED232A" rx="8"/><text x="50" y="60" font-family="Arial" font-size="16" fill="white" text-anchor="middle" font-weight="bold">HDFC</text></svg>');
+}
+
+main .form form .field-salary-bank > .radio-wrapper[data-id="salary-bank-1"] > label::before {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23F37A1F" rx="8"/><text x="50" y="60" font-family="Arial" font-size="16" fill="white" text-anchor="middle" font-weight="bold">ICICI</text></svg>');
+}
+
+main .form form .field-salary-bank > .radio-wrapper[data-id="salary-bank-2"] > label::before {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%239B2743" rx="8"/><text x="50" y="60" font-family="Arial" font-size="16" fill="white" text-anchor="middle" font-weight="bold">AXIS</text></svg>');
+}
+
+main .form form .field-salary-bank > .radio-wrapper[data-id="salary-bank-3"] > label::before {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23ED1C24" rx="8"/><text x="50" y="60" font-family="Arial" font-size="14" fill="white" text-anchor="middle" font-weight="bold">KOTAK</text></svg>');
+}
+
+main .form form .field-salary-bank > .radio-wrapper[data-id="salary-bank-4"] > label::before {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%231C4C9E" rx="8"/><text x="50" y="60" font-family="Arial" font-size="18" fill="white" text-anchor="middle" font-weight="bold">SBI</text></svg>');
+}
+
+main .form form .field-salary-bank > .radio-wrapper[data-id="salary-bank-5"] > label::before {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23F26522" rx="8"/><text x="50" y="55" font-family="Arial" font-size="12" fill="white" text-anchor="middle" font-weight="bold">BANK OF</text><text x="50" y="70" font-family="Arial" font-size="12" fill="white" text-anchor="middle" font-weight="bold">BARODA</text></svg>');
+}
+
+main .form form .field-salary-bank > .radio-wrapper[data-id="salary-bank-6"] > label::before {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23A6192E" rx="8"/><text x="50" y="55" font-family="Arial" font-size="14" fill="white" text-anchor="middle" font-weight="bold">IDFC</text><text x="50" y="70" font-family="Arial" font-size="12" fill="white" text-anchor="middle" font-weight="bold">FIRST</text></svg>');
+}
+
+main .form form .field-salary-bank > .radio-wrapper[data-id="salary-bank-7"] > label::before {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23607D8B" rx="8"/><text x="50" y="55" font-family="Arial" font-size="12" fill="white" text-anchor="middle" font-weight="bold">OTHER</text><text x="50" y="70" font-family="Arial" font-size="12" fill="white" text-anchor="middle" font-weight="bold">BANK</text></svg>');
+}
+
+/* Other Bank Dropdown, Account Number, and IFSC Code Fields */
+main .form form .field-salary-bank-selection > .text-wrapper {
+    margin-top: 16px;
+    padding: 0;
+}
+
+main .form form .field-salary-bank-selection > .text-wrapper label {
+    font-size: 14px;
+    color: #666;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+main .form form .field-salary-bank-selection > .text-wrapper input {
+    background-color: #fff;
+    border: 1px solid #D1D5DB;
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 14px;
+    color: #333;
+    height: 44px;
+}
+
+main .form form .field-salary-bank-selection > .text-wrapper input:focus {
+    border-color: #5F8DDA;
+    box-shadow: 0 0 0 3px rgba(95, 141, 218, 0.1);
+}
+
+/* Income Verification Methods Panel */
+main .form form .field-income-verification-methods {
+    background-color: #F0F4FF;
+    border-radius: 12px;
+    padding: 20px 24px;
+}
+
+main .form form .field-income-verification-methods > legend {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    padding: 0;
+    border: none;
+}
+
+main .form form .field-income-verification-methods > legend::before {
+    content: "✓";
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    background-color: #5F8DDA;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 28px;
+    margin-right: 12px;
+}
+
+/* Income Verification Method Cards */
+main .form form .field-income-verification-method {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    padding: 0;
+}
+
+main .form form .field-income-verification-method > .radio-wrapper {
+    margin: 0;
+    position: relative;
+}
+
+main .form form .field-income-verification-method > .radio-wrapper > input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+main .form form .field-income-verification-method > .radio-wrapper > label {
+    display: block;
+    background-color: #fff;
+    border: 2px solid #E0E0E0;
+    border-radius: 12px;
+    padding: 24px 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-height: 140px;
+    position: relative;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+main .form form .field-income-verification-method > .radio-wrapper > label:hover {
+    border-color: #B0C4DE;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+}
+
+/* Selected state */
+main .form form .field-income-verification-method > .radio-wrapper > input[type="radio"]:checked ~ label {
+    border-color: #5F8DDA;
+    background-color: #F5F9FF;
+    box-shadow: 0 0 0 1px #5F8DDA, 0 4px 12px rgba(95, 141, 218, 0.15);
+}
+
+/* Radio button circle indicator */
+main .form form .field-income-verification-method > .radio-wrapper > label::before {
+    content: "";
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #D1D5DB;
+    border-radius: 50%;
+    background-color: #fff;
+    transition: all 0.2s ease;
+}
+
+main .form form .field-income-verification-method > .radio-wrapper > input[type="radio"]:checked ~ label::before {
+    border-color: #5F8DDA;
+    background-color: #fff;
+}
+
+/* Inner circle when selected */
+main .form form .field-income-verification-method > .radio-wrapper > input[type="radio"]:checked ~ label::after {
+    content: "";
+    position: absolute;
+    top: 26px;
+    left: 26px;
+    width: 8px;
+    height: 8px;
+    background-color: #5F8DDA;
+    border-radius: 50%;
+}
+
+/* Card title */
+main .form form .field-income-verification-method > .radio-wrapper > label {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1a1a1a;
+    padding-left: 52px;
+    padding-top: 20px;
+}
+
+/* Add description text below title */
+main .form form .field-income-verification-method > .radio-wrapper[data-id="income-verification-method"] > label::after {
+    content: "Instant & secure, processed via RBI-regulated partner.";
+}
+
+main .form form .field-income-verification-method > .radio-wrapper[data-id="income-verification-method-1"] > label::after {
+    content: "Quick & hassle-free, processed via NetBanking.";
+}
+
+main .form form .field-income-verification-method > .radio-wrapper[data-id="income-verification-method-2"] > label::after {
+    content: "Processed via uploading bank statement of the last 6 months.";
+}
+
+main .form form .field-income-verification-method > .radio-wrapper > label::after {
+    position: absolute;
+    top: 50px;
+    left: 52px;
+    right: 20px;
+    font-size: 13px;
+    font-weight: 400;
+    color: #666;
+    line-height: 1.5;
+}
+
+/* Recommended Badge for Account Aggregator */
+main .form form .field-income-verification-method > .radio-wrapper[data-id="income-verification-method"] > input[type="radio"]:checked ~ label {
+    padding-bottom: 60px;
+}
+
+main .form form .field-income-verification-method > .radio-wrapper[data-id="income-verification-method"] > input[type="radio"]:checked ~ label::before {
+    content: "Recommended";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 36px;
+    background: linear-gradient(135deg, #0FA877 0%, #0C9167 100%);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 0 0 10px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+}
+
+/* Adjust the radio circle for recommended card */
+main .form form .field-income-verification-method > .radio-wrapper[data-id="income-verification-method"] > input[type="radio"]:checked ~ label::after {
+    top: 26px;
+    left: 26px;
+    width: 8px;
+    height: 8px;
+    background-color: #5F8DDA;
+    border-radius: 50%;
+    content: "";
+}
+
+/* Responsive adjustments for salary bank section */
+@media (width <= 768px) {
+    main .form form .field-salary-bank-and-income-verification {
+        padding: 24px 20px;
+    }
+    
+    main .form form .field-salary-bank-selection,
+    main .form form .field-income-verification-methods {
+        padding: 16px 20px;
+    }
+    
+    main .form form .field-salary-bank > .radio-wrapper > label {
+        width: 90px;
+        height: 90px;
+    }
+    
+    main .form form .field-income-verification-method {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (width <= 480px) {
+    main .form form .field-salary-bank-and-income-verification {
+        padding: 20px 16px;
+    }
+    
+    main .form form .field-salary-bank-selection,
+    main .form form .field-income-verification-methods {
+        padding: 16px;
+    }
+    
+    main .form form .field-salary-bank {
+        gap: 8px;
+        justify-content: space-between;
+    }
+    
+    main .form form .field-salary-bank > .radio-wrapper {
+        flex: 0 0 calc(25% - 6px);
+    }
+    
+    main .form form .field-salary-bank > .radio-wrapper > label {
+        width: 100%;
+        height: 80px;
+        padding: 8px;
+        font-size: 10px;
+    }
+    
+    main .form form .field-salary-bank > .radio-wrapper > label::before {
+        width: 40px;
+        height: 40px;
+        margin-bottom: 6px;
+    }
+    
+    main .form form .field-income-verification-method > .radio-wrapper > label {
+        min-height: 120px;
+        padding: 20px 16px;
+        padding-left: 48px;
+    }
+    
+    main .form form .field-income-verification-method > .radio-wrapper > label::before {
+        top: 16px;
+        left: 16px;
+        width: 18px;
+        height: 18px;
+    }
+    
+    main .form form .field-income-verification-method > .radio-wrapper > input[type="radio"]:checked ~ label::after {
+        top: 22px;
+        left: 22px;
+        width: 6px;
+        height: 6px;
+    }
+    
+    main .form form .field-income-verification-method > .radio-wrapper > label::after {
+        top: 45px;
+        left: 48px;
+        font-size: 12px;
+    }
+    
+    main .form form .field-income-verification-method > .radio-wrapper[data-id="income-verification-method"] > input[type="radio"]:checked ~ label {
+        padding-bottom: 55px;
+    }
+    
+    main .form form .field-income-verification-method > .radio-wrapper[data-id="income-verification-method"] > input[type="radio"]:checked ~ label::before {
+        height: 32px;
+        font-size: 12px;
+    }
+}
