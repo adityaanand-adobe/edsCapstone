@@ -1720,16 +1720,6 @@ main .form form .field-offermsg .field-plain-text1777371912669 p {
     font-weight: 400;
     margin: 0 0 12px 0;
     line-height: 1.5;
-    position: relative;
-    padding-left: 32px;
-}
-
-main .form form .field-offermsg .field-plain-text1777371912669 p::before {
-    content: "🎉";
-    position: absolute;
-    left: 0;
-    top: 0;
-    font-size: 20px;
 }
 
 /* Second paragraph - Loan amount with highlighted background */
@@ -1750,7 +1740,7 @@ main .form form .field-offermsg .field-plain-text-20417643851777371920128::befor
     transform: translateY(-50%);
     width: 40px;
     height: 40px;
-    background-image: url('/icons/money-bag-svgrepo-com.svg');
+    background-image: url('../../icons/money-bag-svgrepo-com.svg');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -1784,11 +1774,6 @@ main .form form .field-offermsg .field-plain-text-20417643851777371920128 p {
 @media (width <= 480px) {
     main .form form .field-offermsg .field-plain-text1777371912669 p {
         font-size: 15px;
-        padding-left: 28px;
-    }
-    
-    main .form form .field-offermsg .field-plain-text1777371912669 p::before {
-        font-size: 18px;
     }
     
     main .form form .field-offermsg .field-plain-text-20417643851777371920128 {
