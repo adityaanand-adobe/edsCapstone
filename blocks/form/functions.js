@@ -192,6 +192,147 @@ function initEMICalculator() {
   updateEMICalculation();
 }
 
+/**
+ * Map form field values to review section fields
+ * This function collects values from various form sections and populates the review section
+ */
+function mapFormFieldsToReview() {
+  // Helper function to get field value by name
+  const getFieldValue = (fieldName) => {
+    const field = document.querySelector(`[name="${fieldName}"]`);
+    if (!field) return '';
+    
+    // Handle radio buttons
+    if (field.type === 'radio') {
+      const checkedRadio = document.querySelector(`[name="${fieldName}"]:checked`);
+      return checkedRadio ? checkedRadio.value : '';
+    }
+    
+    return field.value || '';
+  };
+
+  // Helper function to set field value by name
+  const setFieldValue = (fieldName, value) => {
+    const field = document.querySelector(`[name="${fieldName}"]`);
+    if (field) {
+      field.value = value;
+    }
+  };
+
+  // Helper function to get radio button label text
+  const getRadioLabelText = (fieldName) => {
+    const checkedRadio = document.querySelector(`[name="${fieldName}"]:checked`);
+    if (!checkedRadio) return '';
+    
+    const label = document.querySelector(`label[for="${checkedRadio.id}"]`);
+    return label ? label.textContent.trim() : '';
+  };
+
+  // 1. Map Loan Details
+  const loanAmount = getFieldValue('loanAmount');
+  const emiAmount = getFieldValue('emi_amount');
+  const loanTenure = getFieldValue('loanTenure');
+  const taxes = getFieldValue('taxes');
+  const roi = getFieldValue('roi');
+  const selectLoanType = getFieldValue('select_loan_type');
+  const employerCompanyName = getFieldValue('enter_employer_company_name') || getFieldValue('employer_company_name');
+
+  setFieldValue('loan_amount', loanAmount ? formatIndianCurrency(parseFloat(loanAmount)) : '');
+  // EMI amount field has two instances - map to the review section one
+  const reviewEmiField = document.querySelector('#panelcontainer-f23c45ef23 input[name="emi_amount"]');
+  if (reviewEmiField) {
+    reviewEmiField.value = emiAmount;
+  }
+  setFieldValue('tenure', loanTenure ? `${Math.round(parseFloat(loanTenure))} months` : '');
+  setFieldValue('processing_fee', taxes);
+  setFieldValue('rate_of_interest', roi);
+  setFieldValue('employer_name', employerCompanyName);
+  setFieldValue('type_of_loan', selectLoanType);
+
+  // 2. Map Personal Details
+  const firstName = getFieldValue('first_name_pan');
+  const middleName = getFieldValue('middle_name_pan');
+  const lastName = getFieldValue('last_name_pan');
+  const fullName = [firstName, middleName, lastName].filter(n => n).join(' ').trim();
+  const panNumber = getFieldValue('pan_number');
+  const addressAadhaar = getFieldValue('address_as_per_aadhaar_records');
+
+  setFieldValue('full_name', fullName);
+  setFieldValue('pan', panNumber);
+  setFieldValue('current_address', addressAadhaar);
+
+  // 3. Map Salary Account Details
+  const accountNumber = getFieldValue('account_number');
+  const bankIfsc = getFieldValue('bank_ifsc');
+  const salaryBank = getRadioLabelText('salary_bank');
+  const otherBank = getFieldValue('other_bank');
+  const bankName = otherBank || salaryBank;
+
+  setFieldValue('salary_a_c_number', accountNumber);
+  setFieldValue('ifsc', bankIfsc);
+  setFieldValue('bank_name', bankName);
+
+  // 4. Map Office Address
+  const industryType = getFieldValue('industry_type');
+  const officeAddress = getFieldValue('office_address');
+
+  setFieldValue('company_name', employerCompanyName);
+  // Industry type field has two instances - map to the review section one
+  const reviewIndustryField = document.querySelector('#panelcontainer-a8efdc8bf0 input[name="industry_type"]');
+  if (reviewIndustryField) {
+    reviewIndustryField.value = industryType;
+  }
+  setFieldValue('current_employer_address', officeAddress);
+
+  // 5. Map Verify Email ID
+  const personalEmailId = getFieldValue('email_id');
+  const workEmailId = getFieldValue('enter_email_id');
+
+  setFieldValue('personal_email_id', personalEmailId);
+  setFieldValue('work_email_id', workEmailId);
+
+  // Note: Schedule of Charges, Mobile Number, and Date of Birth are not present in the source fields
+  // These may need to be populated from other sources or left blank
+}
+
+/**
+ * Initialize form field mapping
+ * Sets up event listeners to automatically update review section when fields change
+ */
+function initFormFieldMapping() {
+  // List of fields to monitor for changes
+  const fieldsToMonitor = [
+    'loanAmount', 'loanTenure', 'emi_amount', 'taxes', 'roi',
+    'first_name_pan', 'middle_name_pan', 'last_name_pan',
+    'pan_number', 'email_id', 'address_as_per_aadhaar_records',
+    'salary_bank', 'other_bank', 'account_number', 'bank_ifsc',
+    'enter_employer_company_name', 'employer_company_name',
+    'industry_type', 'office_address', 'enter_email_id',
+    'select_loan_type'
+  ];
+
+  // Add change event listeners to all monitored fields
+  fieldsToMonitor.forEach(fieldName => {
+    const fields = document.querySelectorAll(`[name="${fieldName}"]`);
+    fields.forEach(field => {
+      const eventType = field.type === 'radio' ? 'change' : 'input';
+      field.addEventListener(eventType, () => {
+        // Debounce to avoid too many updates
+        setTimeout(mapFormFieldsToReview, 100);
+      });
+    });
+  });
+
+  // Also trigger mapping when the "Proceed >" button is clicked
+  const proceedButton = document.querySelector('#button-1ea1fad0a7');
+  if (proceedButton) {
+    proceedButton.addEventListener('click', mapFormFieldsToReview);
+  }
+
+  // Initial mapping
+  mapFormFieldsToReview();
+}
+
 // eslint-disable-next-line import/prefer-default-export
 export {
   getFullName,
@@ -203,4 +344,6 @@ export {
   calculateEMI,
   formatIndianCurrency,
   initEMICalculator,
+  mapFormFieldsToReview,
+  initFormFieldMapping,
 };
