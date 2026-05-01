@@ -256,10 +256,30 @@ function mapFormFieldsToReview() {
   const fullName = [firstName, middleName, lastName].filter(n => n).join(' ').trim();
   const panNumber = getFieldValue('pan_number');
   const addressAadhaar = getFieldValue('address_as_per_aadhaar_records');
+  
+  // Get mobile number and DOB from the initial personal loan offer panel
+  const mobileNumber = getFieldValue('aadhaar_linked_mobile_number');
+  const dateOfBirth = getFieldValue('date_of_birth');
 
   setFieldValue('full_name', fullName);
   setFieldValue('pan', panNumber);
   setFieldValue('current_address', addressAadhaar);
+  
+  // Map mobile number and date of birth to review section
+  const reviewMobileField = document.querySelector('#panelcontainer-b7a1f38e30 input[name="mobile_number"]');
+  if (reviewMobileField) {
+    reviewMobileField.value = mobileNumber;
+  }
+  
+  const reviewDobField = document.querySelector('#panelcontainer-b7a1f38e30 input[name="date_of_birth"]');
+  if (reviewDobField) {
+    // Get the display value if it exists (for formatted dates)
+    const dobInput = document.querySelector('input[name="date_of_birth"]');
+    const displayValue = dobInput?.getAttribute('display-value') || dateOfBirth;
+    reviewDobField.value = displayValue;
+    reviewDobField.setAttribute('display-value', displayValue);
+    reviewDobField.setAttribute('edit-value', dateOfBirth);
+  }
 
   // 3. Map Salary Account Details
   const accountNumber = getFieldValue('account_number');
@@ -291,8 +311,7 @@ function mapFormFieldsToReview() {
   setFieldValue('personal_email_id', personalEmailId);
   setFieldValue('work_email_id', workEmailId);
 
-  // Note: Schedule of Charges, Mobile Number, and Date of Birth are not present in the source fields
-  // These may need to be populated from other sources or left blank
+  // Note: Schedule of Charges field is not present in the source fields and may need to be populated separately
 }
 
 /**
@@ -308,7 +327,7 @@ function initFormFieldMapping() {
     'salary_bank', 'other_bank', 'account_number', 'bank_ifsc',
     'enter_employer_company_name', 'employer_company_name',
     'industry_type', 'office_address', 'enter_email_id',
-    'select_loan_type'
+    'select_loan_type', 'aadhaar_linked_mobile_number', 'date_of_birth'
   ];
 
   // Add change event listeners to all monitored fields
