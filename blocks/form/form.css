@@ -818,6 +818,7 @@ main .form form .accordion .panel-wrapper {
     overflow: hidden;
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    border: 1px solid #E8E8E8;
 }
 
 main .form form .accordion .panel-wrapper > legend.accordion-legend {
@@ -833,6 +834,7 @@ main .form form .accordion .panel-wrapper > legend.accordion-legend {
     transition: background-color 0.2s ease;
     position: relative;
     border: none;
+    width: 100%;
 }
 
 main .form form .accordion .panel-wrapper > legend.accordion-legend:hover {
@@ -908,7 +910,7 @@ main .form form .accordion .panel-wrapper > .text-wrapper,
 main .form form .accordion .panel-wrapper > .number-wrapper,
 main .form form .accordion .panel-wrapper > .email-wrapper,
 main .form form .accordion .panel-wrapper > .plain-text-wrapper {
-    padding: 0 42px;
+    padding: 0 24px;
     margin-top: 20px;
     margin-bottom: 20px;
 }
@@ -926,7 +928,7 @@ main .form form .accordion .panel-wrapper:not(.accordion-collapse) > *:last-chil
 /* Label styling in accordion */
 main .form form .accordion .panel-wrapper .field-label {
     font-size: 14px;
-    color: #6B7280;
+    color: #666;
     font-weight: 400;
     margin-bottom: 8px;
     display: block;
@@ -937,12 +939,12 @@ main .form form .accordion .panel-wrapper input,
 main .form form .accordion .panel-wrapper select {
     background-color: #fff;
     border: 1px solid #D1D5DB;
-    border-radius: 6px;
-    padding: 11px 14px;
-    font-size: 15px;
-    color: #1F2937;
+    border-radius: 4px;
+    padding: 10px 12px;
+    font-size: 14px;
+    color: #333;
     width: 100%;
-    height: 44px;
+    height: 42px;
     transition: all 0.2s ease;
 }
 
