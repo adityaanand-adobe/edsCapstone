@@ -2501,45 +2501,63 @@ main .form form .field-income-verification-method > .radio-wrapper > input[type=
     border-radius: 50%;
 }
 
-/* Card title */
+/* Card label content */
 main .form form .field-income-verification-method > .radio-wrapper > label {
     font-size: 16px;
     font-weight: 600;
     color: #1a1a1a;
-    padding-left: 52px;
-    padding-top: 20px;
-}
-
-/* Add description text below title */
-main .form form .field-income-verification-method > .radio-wrapper[data-id="income-verification-method"] > label::after {
-    content: "Instant & secure, processed via RBI-regulated partner.";
-}
-
-main .form form .field-income-verification-method > .radio-wrapper[data-id="income-verification-method-1"] > label::after {
-    content: "Quick & hassle-free, processed via NetBanking.";
-}
-
-main .form form .field-income-verification-method > .radio-wrapper[data-id="income-verification-method-2"] > label::after {
-    content: "Processed via uploading bank statement of the last 6 months.";
-}
-
-main .form form .field-income-verification-method > .radio-wrapper > label::after {
-    position: absolute;
-    top: 50px;
-    left: 52px;
-    right: 20px;
-    font-size: 13px;
-    font-weight: 400;
-    color: #666;
+    padding: 20px 20px 20px 52px;
     line-height: 1.5;
 }
 
-/* Recommended Badge for Account Aggregator */
-main .form form .field-income-verification-method > .radio-wrapper[data-id="income-verification-method"] > input[type="radio"]:checked ~ label {
-    padding-bottom: 60px;
+/* Simplify - use ::before ONLY for radio circle */
+main .form form .field-income-verification-method > .radio-wrapper > label::before {
+    content: "";
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #D1D5DB;
+    border-radius: 50%;
+    background-color: #fff;
+    transition: all 0.2s ease;
+    z-index: 3;
 }
 
-main .form form .field-income-verification-method > .radio-wrapper[data-id="income-verification-method"] > input[type="radio"]:checked ~ label::before {
+/* Checked radio circle */
+main .form form .field-income-verification-method > .radio-wrapper > input[type="radio"]:checked ~ label::before {
+    border-color: #5F8DDA;
+    box-shadow: inset 0 0 0 4px #fff, inset 0 0 0 20px #5F8DDA;
+}
+
+/* Recommended Badge - Create as wrapper ::after (only on wrapper, not label) */
+main .form form .field-income-verification-method > .radio-wrapper[data-id="income-verification-method"] > input[type="radio"]:checked ~ label {
+    padding-bottom: 56px;
+}
+
+main .form form .field-income-verification-method > .radio-wrapper[data-id="income-verification-method"]::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 0;
+    background: linear-gradient(135deg, #0FA877 0%, #0C9167 100%);
+    border-radius: 0 0 10px 10px;
+    transition: height 0.2s ease;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    overflow: hidden;
+}
+
+main .form form .field-income-verification-method > .radio-wrapper[data-id="income-verification-method"] > input[type="radio"]:checked ~ label::after {
     content: "Recommended";
     position: absolute;
     bottom: 0;
@@ -2555,18 +2573,7 @@ main .form form .field-income-verification-method > .radio-wrapper[data-id="inco
     display: flex;
     align-items: center;
     justify-content: center;
-    border: none;
-}
-
-/* Adjust the radio circle for recommended card */
-main .form form .field-income-verification-method > .radio-wrapper[data-id="income-verification-method"] > input[type="radio"]:checked ~ label::after {
-    top: 26px;
-    left: 26px;
-    width: 8px;
-    height: 8px;
-    background-color: #5F8DDA;
-    border-radius: 50%;
-    content: "";
+    z-index: 10;
 }
 
 /* Responsive adjustments for salary bank section */
