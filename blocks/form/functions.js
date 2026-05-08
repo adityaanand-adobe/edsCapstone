@@ -184,16 +184,29 @@ function initEMICalculator() {
 
   /**
    * Update the offer message text that shows max eligible amount.
-   * @param {number} maxAmount
+   * Marks the target element with data-offer-msg on first run so it can always be found.
+   * @param {number} maxAmount - Pass 0 to show ineligibility message.
    */
   function updateOfferMessage(maxAmount) {
-    // Target the plain-text element that contains the "You can get a loan up to" message
-    const offerTextEls = document.querySelectorAll('[id^="panelcontainer-454de6be08"] p, .field-offermsg p');
-    offerTextEls.forEach((el) => {
-      if (el.textContent && el.textContent.includes('loan up to')) {
-        el.textContent = `You can get a loan up to ${formatIndianCurrency(maxAmount)}!`;
-      }
-    });
+    // On first call, find and tag the element containing the offer text
+    let offerEl = document.querySelector('[data-offer-msg="true"]');
+    if (!offerEl) {
+      // Walk all <p> tags inside .field-offermsg and find the one with the amount text
+      const candidates = document.querySelectorAll('.field-offermsg p, .field-offermsg div');
+      candidates.forEach((el) => {
+        if (!offerEl && el.textContent && el.textContent.includes('loan up to')) {
+          el.setAttribute('data-offer-msg', 'true');
+          offerEl = el;
+        }
+      });
+    }
+    if (!offerEl) return;
+
+    if (maxAmount <= 0) {
+      offerEl.textContent = 'You are not eligible for a loan.';
+    } else {
+      offerEl.textContent = `You can get a loan up to ${formatIndianCurrency(maxAmount)}!`;
+    }
   }
 
   /**
@@ -226,13 +239,8 @@ function initEMICalculator() {
       emiAmountField.value = '₹0';
       const taxesField = document.querySelector('input[name="taxes"]');
       if (taxesField) taxesField.value = '₹0';
-      // Update offer message to show ₹0 / ineligible
-      const offerTextEls = document.querySelectorAll('.field-offermsg p');
-      offerTextEls.forEach((el) => {
-        if (el.textContent && el.textContent.includes('loan up to')) {
-          el.textContent = 'You are not eligible for a loan.';
-        }
-      });
+      // Update offer message to show ineligible state
+      updateOfferMessage(0);
       return;
     }
 
