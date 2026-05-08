@@ -460,17 +460,14 @@ function mapFormFieldsToReview() {
 }
 
 /**
- * Generate a unique 10-digit loan application number.
- * Format: HDFC + 6 random digits (e.g. HDFC123456) — total 10 chars.
- * Uses timestamp + random to ensure uniqueness per session.
- * @returns {string} 10-character loan application number
+ * Generate a unique 11-digit numeric loan application number.
+ * Combines last 8 digits of current timestamp with 3 random digits.
+ * @returns {string} 11-digit numeric loan application number
  */
 function generateLoanApplicationNumber() {
-  const prefix = 'HDFC';
-  // Use last 4 digits of timestamp + 2 random digits to make 6 numeric chars
-  const tsSegment = String(Date.now()).slice(-4);
-  const randSegment = String(Math.floor(Math.random() * 100)).padStart(2, '0');
-  return `${prefix}${tsSegment}${randSegment}`;
+  const tsSegment = String(Date.now()).slice(-8);
+  const randSegment = String(Math.floor(Math.random() * 1000)).padStart(3, '0');
+  return `${tsSegment}${randSegment}`;
 }
 
 /**
