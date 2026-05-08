@@ -94,7 +94,7 @@ function startOtpTimer() {
     // When timer reaches 0
     if (timeLeft <= 0) {
       clearInterval(otpTimerInterval);
-      
+
       // Enable resend button
       if (resendBtn) {
         resendBtn.disabled = false;
@@ -136,13 +136,13 @@ function formatIndianCurrency(amount) {
 function calculateEMI(principal, annualRate, tenureMonths) {
   // Convert annual rate to monthly rate (r = annual rate / (12 × 100))
   const monthlyRate = annualRate / (12 * 100);
-  
+
   // EMI = [P × r × (1 + r)^n] / [(1 + r)^n - 1]
   const onePlusR = 1 + monthlyRate;
   const onePlusRPowerN = Math.pow(onePlusR, tenureMonths);
-  
+
   const emi = (principal * monthlyRate * onePlusRPowerN) / (onePlusRPowerN - 1);
-  
+
   return Math.round(emi);
 }
 
@@ -197,12 +197,49 @@ function initEMICalculator() {
   }
 
   /**
-   * Recompute max loan based on salary fields and update slider + offer message.
+   * Enable/disable the loan calculator sliders based on eligibility.
+   * @param {boolean} eligible
+   */
+  function setCalculatorEnabled(eligible) {
+    loanAmountInput.disabled = !eligible;
+    loanTenureInput.disabled = !eligible;
+
+    // Grey-out the loan panel visually
+    const loanPanel = loanAmountInput.closest('fieldset');
+    if (loanPanel) {
+      loanPanel.style.opacity = eligible ? '' : '0.4';
+      loanPanel.style.pointerEvents = eligible ? '' : 'none';
+    }
+  }
+
+  /**
+   * Recompute max loan based on salary and update slider + offer message.
    */
   function updateMaxLoan() {
     const salary = parseFloat(salaryInput?.value) || 0;
+    const MINIMUM_SALARY = 50000;
 
-    if (salary > 0) {
+    if (salary > 0 && salary < MINIMUM_SALARY) {
+      // Not eligible — disable sliders and zero out all display fields
+      setCalculatorEnabled(false);
+      xpressField.value = '₹0';
+      emiAmountField.value = '₹0';
+      const taxesField = document.querySelector('input[name="taxes"]');
+      if (taxesField) taxesField.value = '₹0';
+      // Update offer message to show ₹0 / ineligible
+      const offerTextEls = document.querySelectorAll('.field-offermsg p');
+      offerTextEls.forEach((el) => {
+        if (el.textContent && el.textContent.includes('loan up to')) {
+          el.textContent = 'You are not eligible for a loan.';
+        }
+      });
+      return;
+    }
+
+    // Eligible (or no salary entered yet — show default state)
+    setCalculatorEnabled(true);
+
+    if (salary >= MINIMUM_SALARY) {
       const maxLoan = calculateMaxLoanAmount(salary);
       loanAmountInput.max = maxLoan;
 
@@ -232,7 +269,7 @@ function initEMICalculator() {
 
       updateOfferMessage(maxLoan);
     } else {
-      // Reset to absolute max when no salary entered
+      // No salary entered yet — reset to absolute max (default state)
       loanAmountInput.max = ABSOLUTE_MAX;
       updateOfferMessage(ABSOLUTE_MAX);
     }
@@ -251,6 +288,13 @@ function initEMICalculator() {
     // Calculate and update EMI
     const emi = calculateEMI(loanAmount, annualRate, tenure);
     emiAmountField.value = formatIndianCurrency(emi);
+
+    // Update taxes / processing fee: 0.5% of loan amount, rounded to nearest ₹100
+    const taxesField = document.querySelector('input[name="taxes"]');
+    if (taxesField) {
+      const processingFee = Math.round((loanAmount * 0.005) / 100) * 100;
+      taxesField.value = formatIndianCurrency(processingFee);
+    }
 
     // Update range bubbles
     if (loanAmountBubble) {
@@ -294,13 +338,13 @@ function mapFormFieldsToReview() {
   const getFieldValue = (fieldName) => {
     const field = document.querySelector(`[name="${fieldName}"]`);
     if (!field) return '';
-    
+
     // Handle radio buttons
     if (field.type === 'radio') {
       const checkedRadio = document.querySelector(`[name="${fieldName}"]:checked`);
       return checkedRadio ? checkedRadio.value : '';
     }
-    
+
     return field.value || '';
   };
 
@@ -316,7 +360,7 @@ function mapFormFieldsToReview() {
   const getRadioLabelText = (fieldName) => {
     const checkedRadio = document.querySelector(`[name="${fieldName}"]:checked`);
     if (!checkedRadio) return '';
-    
+
     const label = document.querySelector(`label[for="${checkedRadio.id}"]`);
     return label ? label.textContent.trim() : '';
   };
@@ -349,7 +393,7 @@ function mapFormFieldsToReview() {
   const fullName = [firstName, middleName, lastName].filter(n => n).join(' ').trim();
   const panNumber = getFieldValue('pan_number');
   const addressAadhaar = getFieldValue('address_as_per_aadhaar_records');
-  
+
   // Get mobile number and DOB from the initial personal loan offer panel
   const mobileNumber = getFieldValue('aadhaar_linked_mobile_number');
   const dateOfBirth = getFieldValue('date_of_birth');
@@ -357,13 +401,13 @@ function mapFormFieldsToReview() {
   setFieldValue('full_name', fullName);
   setFieldValue('pan', panNumber);
   setFieldValue('current_address', addressAadhaar);
-  
+
   // Map mobile number and date of birth to review section
   const reviewMobileField = document.querySelector('#panelcontainer-b7a1f38e30 input[name="mobile_number"]');
   if (reviewMobileField) {
     reviewMobileField.value = mobileNumber;
   }
-  
+
   const reviewDobField = document.querySelector('#panelcontainer-b7a1f38e30 input[name="date_of_birth"]');
   if (reviewDobField) {
     // Get the display value if it exists (for formatted dates)
