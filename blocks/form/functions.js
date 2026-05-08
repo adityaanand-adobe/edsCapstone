@@ -460,6 +460,43 @@ function mapFormFieldsToReview() {
 }
 
 /**
+ * Generate a unique 10-digit loan application number.
+ * Format: HDFC + 6 random digits (e.g. HDFC123456) — total 10 chars.
+ * Uses timestamp + random to ensure uniqueness per session.
+ * @returns {string} 10-character loan application number
+ */
+function generateLoanApplicationNumber() {
+  const prefix = 'HDFC';
+  // Use last 4 digits of timestamp + 2 random digits to make 6 numeric chars
+  const tsSegment = String(Date.now()).slice(-4);
+  const randSegment = String(Math.floor(Math.random() * 100)).padStart(2, '0');
+  return `${prefix}${tsSegment}${randSegment}`;
+}
+
+/**
+ * Populate the Thank You / Loan Application Status panel.
+ * - Generates and writes a unique loan application number.
+ * - Copies the selected loan amount into the summary "Loan Amount" field.
+ */
+function populateLoanApplicationStatus() {
+  // 1. Generate and set loan application number
+  const appNumberField = document.querySelector('input[name="loan_application_number"]');
+  if (appNumberField) {
+    appNumberField.value = generateLoanApplicationNumber();
+  }
+
+  // 2. Map loan amount to the summary field in the Thank You panel
+  const loanAmountInput = document.querySelector('input[name="loanAmount"]');
+  const summaryLoanAmountField = document.querySelector('input[name="text_input1777376474952"]');
+  if (summaryLoanAmountField && loanAmountInput) {
+    const loanAmount = parseFloat(loanAmountInput.value) || 0;
+    summaryLoanAmountField.value = loanAmount > 0
+      ? formatIndianCurrency(loanAmount)
+      : '';
+  }
+}
+
+/**
  * Initialize form field mapping
  * Sets up event listeners to automatically update review section when fields change
  */
@@ -510,4 +547,6 @@ export {
   initEMICalculator,
   mapFormFieldsToReview,
   initFormFieldMapping,
+  generateLoanApplicationNumber,
+  populateLoanApplicationStatus,
 };
