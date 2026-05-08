@@ -494,6 +494,108 @@ function populateLoanApplicationStatus() {
 }
 
 /**
+ * Collect all data from the Review Details panel and submit to /api/submitLoanApplication.
+ * Also calls populateLoanApplicationStatus() to fill the Thank You panel.
+ * Attaches itself to the "Confirm >" button (name="reivew_button").
+ */
+async function submitLoanApplication() {
+  const API_BASE = 'http://localhost:3000';
+
+  // Helper to read a field value by name (picks first non-readonly match for review panel)
+  const getVal = (name) => {
+    const el = document.querySelector(`[name="${name}"]`);
+    return el ? el.value.trim() : '';
+  };
+
+  // Generate application number and populate Thank You panel first
+  const appNumberField = document.querySelector('input[name="loan_application_number"]');
+  let applicationNumber = appNumberField?.value?.trim();
+  if (!applicationNumber) {
+    applicationNumber = generateLoanApplicationNumber();
+    if (appNumberField) appNumberField.value = applicationNumber;
+  }
+
+  // Also sync loan amount in the Thank You panel
+  populateLoanApplicationStatus();
+  // Overwrite with the already-generated number (populateLoanApplicationStatus generates a new one)
+  if (appNumberField) appNumberField.value = applicationNumber;
+
+  const payload = {
+    requestString: {
+      applicationNumber,
+      // Loan Details (from review panel #panelcontainer-f23c45ef23)
+      loanAmount: getVal('loan_amount'),
+      emiAmount: (() => {
+        const el = document.querySelector('#panelcontainer-f23c45ef23 input[name="emi_amount"]');
+        return el ? el.value.trim() : getVal('emi_amount');
+      })(),
+      tenure: getVal('tenure'),
+      processingFee: getVal('processing_fee'),
+      rateOfInterest: getVal('rate_of_interest'),
+      employerName: getVal('employer_name'),
+      typeOfLoan: getVal('type_of_loan'),
+      scheduleOfCharges: getVal('schedule_of_charges'),
+      // Personal Details (from review panel #panelcontainer-b7a1f38e30)
+      fullName: getVal('full_name'),
+      mobileNumber: (() => {
+        const el = document.querySelector('#panelcontainer-b7a1f38e30 input[name="mobile_number"]');
+        return el ? el.value.trim() : '';
+      })(),
+      dateOfBirth: (() => {
+        const el = document.querySelector('#panelcontainer-b7a1f38e30 input[name="date_of_birth"]');
+        return el ? (el.getAttribute('display-value') || el.value).trim() : '';
+      })(),
+      pan: getVal('pan'),
+      currentAddress: getVal('current_address'),
+      // Salary Account Details
+      salaryAccountNumber: getVal('salary_a_c_number'),
+      ifsc: getVal('ifsc'),
+      bankName: getVal('bank_name'),
+      // Office Address
+      currentEmployerAddress: getVal('current_employer_address'),
+      companyName: getVal('company_name'),
+      industryType: (() => {
+        const el = document.querySelector('#panelcontainer-a8efdc8bf0 input[name="industry_type"]');
+        return el ? el.value.trim() : getVal('industry_type');
+      })(),
+      // Email Details
+      personalEmailId: getVal('personal_email_id'),
+      workEmailId: getVal('work_email_id'),
+    },
+  };
+
+  try {
+    const response = await fetch(`${API_BASE}/api/submitLoanApplication`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+
+    const result = await response.json();
+    console.log('Loan application submission response:', result);
+
+    if (result?.status?.responseCode === '0') {
+      console.log('Application submitted successfully:', applicationNumber);
+    } else {
+      console.error('Submission failed:', result);
+    }
+  } catch (err) {
+    console.error('Error submitting loan application:', err);
+  }
+}
+
+/**
+ * Attach submitLoanApplication to the "Confirm >" button (name="reivew_button").
+ * Call this once during form initialisation.
+ */
+function initConfirmButton() {
+  const confirmBtn = document.querySelector('button[name="reivew_button"]');
+  if (confirmBtn) {
+    confirmBtn.addEventListener('click', submitLoanApplication);
+  }
+}
+
+/**
  * Initialize form field mapping
  * Sets up event listeners to automatically update review section when fields change
  */
@@ -546,4 +648,6 @@ export {
   initFormFieldMapping,
   generateLoanApplicationNumber,
   populateLoanApplicationStatus,
+  submitLoanApplication,
+  initConfirmButton,
 };
