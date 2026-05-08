@@ -127,7 +127,9 @@ async function fieldChanged(payload, form, generateFormRendition) {
         } else if (fieldType === 'checkbox') {
           field.checked = compare(valueToSet, field.value, type);
         } else if (fieldType === 'plain-text') {
-          field.innerHTML = valueToSet;
+          const txt = document.createElement('textarea');
+          txt.innerHTML = valueToSet;
+          field.innerHTML = txt.value;
         } else if (fieldType === 'image') {
           const altText = field?.querySelector('img')?.alt || '';
           field.querySelector('picture')?.replaceWith(createOptimizedPicture(valueToSet, altText));

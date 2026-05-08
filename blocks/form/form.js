@@ -107,14 +107,22 @@ function createRadioOrCheckboxGroup(fd) {
   return wrapper;
 }
 
+function decodeHtmlEntities(str) {
+  const txt = document.createElement('textarea');
+  txt.innerHTML = str;
+  return txt.value;
+}
+
 function createPlainText(fd) {
   const wrapper = createFieldWrapper(fd);
   wrapper.id = fd.id;
-  if (fd.richText) {
-    wrapper.innerHTML = fd.value;
+  const decodedValue = decodeHtmlEntities(fd.value);
+  const htmlTagPattern = /<[a-z][\s\S]*>/i;
+  if (fd.richText || htmlTagPattern.test(decodedValue)) {
+    wrapper.innerHTML = decodedValue;
   } else {
     const paragraph = document.createElement('p');
-    paragraph.textContent = fd.value;
+    paragraph.textContent = decodedValue;
     wrapper.replaceChildren(paragraph);
   }
   return wrapper;
