@@ -147,14 +147,31 @@ function calculateEMI(principal, annualRate, tenureMonths) {
 }
 
 /**
- * Initialize EMI calculator with event listeners
- * Updates EMI amount and loan amount display when user changes the sliders
+ * Calculate maximum eligible loan amount based on salary.
+ * Formula: monthly_net_income * 20, capped at ₹15,00,000 and floored at ₹50,000.
+ * @param {number} salary - Monthly net income (salary)
+ * @returns {number} Maximum eligible loan amount
+ */
+function calculateMaxLoanAmount(salary) {
+  const ABSOLUTE_MAX = 1500000;
+  const ABSOLUTE_MIN = 50000;
+  const MULTIPLIER = 20;
+
+  const computed = Math.max(0, salary) * MULTIPLIER;
+  return Math.min(ABSOLUTE_MAX, Math.max(ABSOLUTE_MIN, Math.round(computed / 1000) * 1000));
+}
+
+/**
+ * Initialize EMI calculator with event listeners.
+ * Updates EMI amount, loan amount display and slider range based on
+ * salary (monthly_net_income_salary) and ongoing EMIs (ongoing_emis_if_any).
  */
 function initEMICalculator() {
   const loanAmountInput = document.querySelector('input[name="loanAmount"]');
   const loanTenureInput = document.querySelector('input[name="loanTenure"]');
   const xpressField = document.querySelector('input[name="xpress"]');
   const emiAmountField = document.querySelector('input[name="emi_amount"]');
+  const salaryInput = document.querySelector('input[name="monthly_net_income_salary"]');
   const loanAmountBubble = document.querySelector('#numberinput-45bf0620a4')?.closest('.range-widget-wrapper')?.querySelector('.range-bubble');
   const tenureBubble = document.querySelector('#numberinput-2a9c496a67')?.closest('.range-widget-wrapper')?.querySelector('.range-bubble');
 
@@ -163,6 +180,66 @@ function initEMICalculator() {
   }
 
   const annualRate = 10.97; // Fixed rate of interest
+  const ABSOLUTE_MAX = 1500000;
+
+  /**
+   * Update the offer message text that shows max eligible amount.
+   * @param {number} maxAmount
+   */
+  function updateOfferMessage(maxAmount) {
+    // Target the plain-text element that contains the "You can get a loan up to" message
+    const offerTextEls = document.querySelectorAll('[id^="panelcontainer-454de6be08"] p, .field-offermsg p');
+    offerTextEls.forEach((el) => {
+      if (el.textContent && el.textContent.includes('loan up to')) {
+        el.textContent = `You can get a loan up to ${formatIndianCurrency(maxAmount)}!`;
+      }
+    });
+  }
+
+  /**
+   * Recompute max loan based on salary fields and update slider + offer message.
+   */
+  function updateMaxLoan() {
+    const salary = parseFloat(salaryInput?.value) || 0;
+
+    if (salary > 0) {
+      const maxLoan = calculateMaxLoanAmount(salary);
+      loanAmountInput.max = maxLoan;
+
+      // Update CSS custom property used for slider styling
+      const rangeWrapper = loanAmountInput.closest('.range-widget-wrapper');
+      if (rangeWrapper) {
+        rangeWrapper.style.setProperty('--total-steps', maxLoan - 50000);
+      }
+
+      // Update scale markers
+      const scaleMarkers = loanAmountInput.closest('.range-widget-wrapper')?.querySelectorAll('.range-scale-marker');
+      if (scaleMarkers && scaleMarkers.length === 7) {
+        for (let i = 0; i < 7; i++) {
+          const markerAmount = 50000 + Math.round((i / 6) * (maxLoan - 50000) / 1000) * 1000;
+          const label = markerAmount >= 100000
+            ? `${(markerAmount / 100000).toFixed(1).replace(/\.0$/, '')}L`
+            : `${(markerAmount / 1000).toFixed(0)}K`;
+          scaleMarkers[i].textContent = label;
+        }
+      }
+
+      // Clamp current value to new max
+      const currentVal = parseFloat(loanAmountInput.value) || 0;
+      if (currentVal > maxLoan) {
+        loanAmountInput.value = maxLoan;
+      }
+
+      updateOfferMessage(maxLoan);
+    } else {
+      // Reset to absolute max when no salary entered
+      loanAmountInput.max = ABSOLUTE_MAX;
+      updateOfferMessage(ABSOLUTE_MAX);
+    }
+
+    // Re-run EMI calculation after adjusting the slider range/value
+    updateEMICalculation(); // eslint-disable-line no-use-before-define
+  }
 
   function updateEMICalculation() {
     const loanAmount = parseFloat(loanAmountInput.value) || 775000;
@@ -182,13 +259,29 @@ function initEMICalculator() {
     if (tenureBubble) {
       tenureBubble.textContent = `${Math.round(tenure)} months`;
     }
+
+    // Keep CSS current-steps in sync for slider fill
+    const rangeWrapper = loanAmountInput.closest('.range-widget-wrapper');
+    if (rangeWrapper) {
+      const min = parseFloat(loanAmountInput.min) || 50000;
+      const max = parseFloat(loanAmountInput.max) || ABSOLUTE_MAX;
+      rangeWrapper.style.setProperty('--current-steps', parseFloat(loanAmountInput.value) - min);
+      rangeWrapper.style.setProperty('--total-steps', max - min);
+    }
   }
 
-  // Add event listeners
+  // Loan slider events
   loanAmountInput.addEventListener('input', updateEMICalculation);
   loanTenureInput.addEventListener('input', updateEMICalculation);
 
+  // Salary event — update max loan when income changes
+  if (salaryInput) {
+    salaryInput.addEventListener('input', updateMaxLoan);
+    salaryInput.addEventListener('change', updateMaxLoan);
+  }
+
   // Initial calculation
+  updateMaxLoan();
   updateEMICalculation();
 }
 
