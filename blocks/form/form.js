@@ -5,7 +5,7 @@ import GoogleReCaptcha from './integrations/recaptcha.js';
 import componentDecorator from './mappings.js';
 import { handleSubmit } from './submit.js';
 import DocBasedFormToAF from './transform.js';
-import { initEMICalculator, initFormFieldMapping } from './functions.js';
+import { initEMICalculator, initFormFieldMapping, initConfirmButton } from './functions.js';
 import {
   checkValidation,
   createButton,
@@ -581,10 +581,11 @@ export default async function decorate(block) {
     }
     container.replaceWith(form);
     
-    // Initialize EMI calculator and form field mapping if the form contains loan calculator fields
+    // Initialize EMI calculator, form field mapping and confirm button
     setTimeout(() => {
       initEMICalculator();
       initFormFieldMapping();
+      initConfirmButton();
     }, 100);
   }
 }
