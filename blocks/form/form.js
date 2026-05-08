@@ -108,15 +108,15 @@ function createRadioOrCheckboxGroup(fd) {
 }
 
 function createPlainText(fd) {
-  const paragraph = document.createElement('p');
-  if (fd.richText) {
-    paragraph.innerHTML = stripTags(fd.value);
-  } else {
-    paragraph.textContent = fd.value;
-  }
   const wrapper = createFieldWrapper(fd);
   wrapper.id = fd.id;
-  wrapper.replaceChildren(paragraph);
+  if (fd.richText) {
+    wrapper.innerHTML = fd.value;
+  } else {
+    const paragraph = document.createElement('p');
+    paragraph.textContent = fd.value;
+    wrapper.replaceChildren(paragraph);
+  }
   return wrapper;
 }
 
